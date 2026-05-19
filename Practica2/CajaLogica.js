@@ -30,6 +30,7 @@ function mostrarTotal() {
 }
 // Exportar las funciones para su uso en otros archivos
 module.exports = {
+    pedidos,
     productos,
     agregarPedido,
     totalAcumulado,
