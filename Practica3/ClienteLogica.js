@@ -40,6 +40,7 @@ function menuCocina() {
     console.log("2. Mostrar productos");
     console.log("3. Editar producto");
     console.log("4. Eliminar producto");
+    console.log("5. Buscar productos (baratos, caros, bebidas, postres)");
     console.log("0. Volver al menú principal");
 
     readline.question("\nElige una opción: ", (opcion) => {
@@ -84,6 +85,12 @@ function menuCocina() {
                     console.log("Producto eliminado!");
                     menuCocina();
                 });
+                break;
+            case "5":
+                const resultados = cocina.buscarProductosFiltros();
+                console.log("Resultados de búsqueda:");
+                console.table(resultados);
+                menuCocina();
                 break;
             case "0":
                 menuPrincipal();

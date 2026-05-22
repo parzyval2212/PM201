@@ -44,21 +44,11 @@ function buscarProductosBaratos(){
     return productos.filter(productos=>productos.precio<10);
 
 }
-
-//Buscar productos caros
-function buscarProductosCaros(){
-    return productos.filter(productos=>productos.precio>10);
+//Buscar productos(caros, baratos, bebidas y postres)
+function buscarProductosFiltros(){
+    return productos.filter(productos=>productos.precio<10 || productos.precio>10 || productos.categoria=="Bebida" || productos.categoria=="Postres");
 }
 
-//Buscar bebidas
-function buscarBebidas(){
-    return productos.filter(productos=>productos.categoria=="Bebida");
-}
-
-//Buscar postres
-function buscarPostres(){
-    return productos.filter(productos=>productos.categorias=="Postres");
-}
 
 //Promociones disponibles
 
@@ -71,5 +61,8 @@ module.exports = {
     agregarProducto,
     editarProducto,
     eliminarProducto,
-    mostrarProductos
+    mostrarProductos,
+    buscarProductosBaratos,
+    buscarProductosFiltros,
+    crearPromociones
 };
