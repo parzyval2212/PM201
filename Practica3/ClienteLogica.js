@@ -5,6 +5,7 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
 
+
 console.log(" Bienvenido al sistema ");
 menuPrincipal();
 
@@ -161,6 +162,8 @@ function menuCaja() {
             : "Sin promo";
 
         console.log(`${index + 1}. ${producto.nombre} - $${producto.precio} (${promocion})`);
+
+        
     });
     console.log("0. Finalizar compra");
 
