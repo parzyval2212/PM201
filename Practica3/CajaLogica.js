@@ -38,5 +38,6 @@ module.exports = {
     agregarPedido,
     totalAcumulado,
     mostrarTotal,
+    calcularIVA,
     mostrarTotalConIVA
 };
