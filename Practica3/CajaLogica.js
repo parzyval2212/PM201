@@ -7,25 +7,25 @@ const pedidos = [];
 
 // Función para agregar un pedido
 function agregarPedido(nombre, precio) {
-    const producto =productos=>producto.find(producto=>producto.nombre.toLowerCase()==nombre.toLowerCase())
-    
-    if (!producto){
-        console.log("EL producto no fue encontrado en cocina");
+    const producto = productos.find(p => p.nombre.toLowerCase() === nombre.toLowerCase());
+
+    if (!producto) {
+        console.log("El producto no fue encontrado en cocina");
         return;
     }
 
-    let precioFinal=precio;
+    let precioFinal = precio;
 
-    //Aplicación de promocion si existe
-    if (producto.promocion){
-        if (producto.promocion.tipo=="descuento"){
-            precioFinal=precioFinal - (precioFinal.promocion.valor/100);
-        }else if(producto.promocion.tipo=="2X1"){
-            precioFinal=precioFinal/2;
+    // Aplicación de promoción si existe
+    if (producto.promocion) {
+        if (producto.promocion.tipo === "descuento") {
+            precioFinal = precioFinal - (precioFinal * producto.promocion.valor / 100);
+        } else if (producto.promocion.tipo.toLowerCase() === "dos por uno" || producto.promocion.tipo.toLowerCase() === "2x1") {
+            precioFinal = precioFinal / 2;
         }
     }
 
-    const pedido={nombre:producto.nombre, precio:precioFinal};
+    const pedido = { nombre: producto.nombre, precio: precioFinal };
     pedidos.push(pedido);
     console.log("Pedido agregado:", pedido);
 }
@@ -35,6 +35,10 @@ function totalAcumulado() {
     return pedidos.reduce((total, pedido) => total + pedido.precio, 0);
 }
 
+// Función para limpiar pedidos después de finalizar la compra
+function limpiarPedidos() {
+    pedidos.length = 0;
+}
 
 // Funcion para obtener el IVA del total acumulado
 function calcularIVA() {
@@ -60,4 +64,5 @@ module.exports = {
     mostrarTotal,
     calcularIVA,
     mostrarTotalConIVA,
+    limpiarPedidos,
 };
