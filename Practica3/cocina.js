@@ -60,10 +60,24 @@ function buscarPostres(){
     return productos.filter(productos=>productos.categorias=="Postres");
 }
 
-//Promociones disponibles
+//Promocion
+function Promociones(nombreProducto, tipoPromocion, valor = null) {
+    const producto = productos.find(producto => producto.nombre.toLowerCase() === nombreProducto.toLowerCase());
 
-function crearPromociones(){
-    
+    if (!producto) {
+        console.log("Producto no encontrado.");
+        return;
+    }
+
+    if (tipoPromocion.toLowerCase() === "descuento") {
+        producto.promocion = { tipo: "descuento", valor: valor };
+        console.log(`Promoción aplicada: ${valor}% de descuento en ${producto.nombre}`);
+    } else if (tipoPromocion.toLowerCase() === "dos por uno") {
+        producto.promocion = { tipo: "dos por uno" };
+        console.log(`Promoción aplicada: 2x1 en ${producto.nombre}`);
+    } else {
+        console.log("Tipo de promoción no válido. Usa: descuento o dos por uno.");
+    }
 }
 // Exportar para que otros módulos (Caja y Cliente) usen los mismos productos
 module.exports = {
@@ -71,5 +85,6 @@ module.exports = {
     agregarProducto,
     editarProducto,
     eliminarProducto,
-    mostrarProductos
+    mostrarProductos, 
+    promociones,
 };
