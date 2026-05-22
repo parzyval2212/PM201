@@ -8,8 +8,8 @@ let productos = [
 ];
 
 // Agregar producto
-function agregarProducto(nombre, precio, cantidad, fechaCaducidad) {
-    productos.push({ nombre, precio, cantidad, fechaCaducidad });
+function agregarProducto(nombre, precio, cantidad, fechaCaducidad, categoria) {
+    productos.push({ nombre, precio, cantidad, fechaCaducidad, categoria });
 }
 
 // Editar producto
@@ -39,6 +39,32 @@ function mostrarProductos() {
     console.table(productos);
 }
 
+//Buscar un producto barata, productos caros, bebidad, postres
+function buscarProductosBaratos(){
+    return productos.filter(productos=>productos.precio<10);
+
+}
+
+//Buscar productos caros
+function buscarProductosCaros(){
+    return productos.filter(productos=>productos.precio>10);
+}
+
+//Buscar bebidas
+function buscarBebidas(){
+    return productos.filter(productos=>productos.categoria=="Bebida");
+}
+
+//Buscar postres
+function buscarPostres(){
+    return productos.filter(productos=>productos.categorias=="Postres");
+}
+
+//Promociones disponibles
+
+function crearPromociones(){
+    
+}
 // Exportar para que otros módulos (Caja y Cliente) usen los mismos productos
 module.exports = {
     productos,
