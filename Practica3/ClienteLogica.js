@@ -128,4 +128,6 @@ function listarPedidos() {
         console.log(`${index + 1}. ${pedido.nombre} - $${pedido.precio}`);
     });
     console.log(`\nTotal acumulado: $${caja.totalAcumulado()}`);
+    console.log(`IVA (16%): $${caja.calcularIVA()}`);
+    console.log(`Total con IVA: $${caja.mostrarTotalConIVA()}`);
 }
