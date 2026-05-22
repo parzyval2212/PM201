@@ -7,7 +7,25 @@ const pedidos = [];
 
 // Función para agregar un pedido
 function agregarPedido(nombre, precio) {
-    const pedido = { nombre, precio };
+    const producto =productos=>producto.find(producto=>producto.nombre.toLowerCase()==nombre.toLowerCase())
+    
+    if (!producto){
+        console.log("EL producto no fue encontrado en cocina");
+        return;
+    }
+
+    let precioFinal=precio;
+
+    //Aplicación de promocion si existe
+    if (producto.promocion){
+        if (producto.promocion.tipo=="descuento"){
+            precioFinal=precioFinal - (precioFinal.promocion.valor/100);
+        }else if(producto.promocion.tipo=="2X1"){
+            precioFinal=precioFinal/2;
+        }
+    }
+
+    const pedido={nombre:producto.nombre, precio:precioFinal};
     pedidos.push(pedido);
     console.log("Pedido agregado:", pedido);
 }
@@ -41,5 +59,5 @@ module.exports = {
     totalAcumulado,
     mostrarTotal,
     calcularIVA,
-    mostrarTotalConIVA
+    mostrarTotalConIVA,
 };

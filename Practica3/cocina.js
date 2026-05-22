@@ -1,11 +1,12 @@
 // cocina
 // Productos iniciales registrados en la cocina
 let productos = [
-    { nombre: "Cafe Americano", precio: 10, cantidad: 20, fechaCaducidad: "2026-12-31" },
-    { nombre: "Cafe con Leche", precio: 12, cantidad: 15, fechaCaducidad: "2026-12-31" },
-    { nombre: "Cafe Capuchino", precio: 15, cantidad: 10, fechaCaducidad: "2026-12-31" },
-    { nombre: "Cafe Expreso", precio: 8, cantidad: 25, fechaCaducidad: "2026-12-31" }
+    { nombre: "Cafe Americano", precio: 10, cantidad: 20, fechaCaducidad: "2026-12-31", categoria: "bebida" },
+    { nombre: "Cafe con Leche", precio: 12, cantidad: 15, fechaCaducidad: "2026-12-31", categoria: "bebida" },
+    { nombre: "Cafe Capuchino", precio: 15, cantidad: 10, fechaCaducidad: "2026-12-31", categoria: "bebida" },
+    { nombre: "Cafe Expreso", precio: 8, cantidad: 25, fechaCaducidad: "2026-12-31", categoria: "bebida" }
 ];
+
 
 // Agregar producto
 function agregarProducto(nombre, precio, cantidad, fechaCaducidad, categoria) {
@@ -36,23 +37,45 @@ function eliminarProducto(index) {
 // Mostrar productos
 function mostrarProductos() {
     console.log("Productos existentes en la cocina:");
-    console.table(productos);
+    const productosFormateados = productos.map(producto => ({
+        nombre: producto.nombre,
+        precio: producto.precio,
+        cantidad: producto.cantidad,
+        fechaCaducidad: producto.fechaCaducidad,
+        categoria: producto.categoria,
+        promocion: producto.promocion 
+            ? (producto.promocion.tipo === "descuento" 
+                ? `Descuento ${producto.promocion.valor}%` 
+                : "2x1")
+            : "Ninguna"
+    }));
+    console.table(productosFormateados);
 }
+
+
 
 //Buscar un producto barata, productos caros, bebidad, postres
-function buscarProductosBaratos(){
-    return productos.filter(productos=>productos.precio<10);
+function buscarProductos(filtro) {
+    switch(filtro.toLowerCase()) {
+        case "baratos":
+            return productos.filter(producto => producto.precio < 10);
+        case "caros":
+            return productos.filter(producto => producto.precio >= 10);
+        case "bebidas":
+            return productos.filter(producto => producto.categoria === "bebida");
+        case "postres":
+            return productos.filter(producto => producto.categoria === "postre");
+        default:
+            console.log("Filtro no válido. Usa: baratos, caros, bebidas, postres.");
+            return [];
+    }
+}
 
-}
-//Buscar productos(caros, baratos, bebidas y postres)
-function buscarProductosFiltros(){
-    return productos.filter(productos=>productos.precio<10 || productos.precio>10 || productos.categoria=="Bebida" || productos.categoria=="Postres");
-}
 
 
 //Promocion
-function Promociones(nombreProducto, tipoPromocion, valor = null) {
-    const producto = productos.find(producto => producto.nombre.toLowerCase() === nombreProducto.toLowerCase());
+function Promociones(index, tipoPromocion, valor = null) {
+    const producto = productos[index]; 
 
     if (!producto) {
         console.log("Producto no encontrado.");
@@ -69,12 +92,14 @@ function Promociones(nombreProducto, tipoPromocion, valor = null) {
         console.log("Tipo de promoción no válido. Usa: descuento o dos por uno.");
     }
 }
+
 // Exportar para que otros módulos (Caja y Cliente) usen los mismos productos
 module.exports = {
     productos,
     agregarProducto,
     editarProducto,
     eliminarProducto,
-    mostrarProductos, 
-    promociones
+    mostrarProductos,
+    buscarProductos, 
+    Promociones
 };

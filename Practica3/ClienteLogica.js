@@ -41,6 +41,7 @@ function menuCocina() {
     console.log("3. Editar producto");
     console.log("4. Eliminar producto");
     console.log("5. Buscar productos (baratos, caros, bebidas, postres)");
+    console.log("6. Aplicar promoción a un producto");
     console.log("0. Volver al menú principal");
 
     readline.question("\nElige una opción: ", (opcion) => {
@@ -87,11 +88,50 @@ function menuCocina() {
                 });
                 break;
             case "5":
-                const resultados = cocina.buscarProductosFiltros();
-                console.log("Resultados de búsqueda:");
-                console.table(resultados);
-                menuCocina();
+                console.log("\n===== BÚSQUEDAS =====");
+                console.log("1. Productos baratos");
+                console.log("2. Productos caros");
+                console.log("3. Bebidas");
+                console.log("4. Postres");
+
+                readline.question("Elige una opción de búsqueda: ", (busqueda) => {
+                    let resultados = [];
+                    if (busqueda === "1") resultados = cocina.buscarProductos("baratos");
+                    else if (busqueda === "2") resultados = cocina.buscarProductos("caros");
+                    else if (busqueda === "3") resultados = cocina.buscarProductos("bebidas");
+                    else if (busqueda === "4") resultados = cocina.buscarProductos("postres");
+                    else console.log("Opción inválida");
+
+                    console.table(resultados);
+                    menuCocina();
+                });
                 break;
+
+            case "6":
+                cocina.mostrarProductos();
+                readline.question("Número del producto para aplicar promoción: ", (index) => {
+                    console.log("Tipos de promoción disponibles:");
+                    console.log("1. Descuento");
+                    console.log("2. Dos por uno");
+
+                    readline.question("Elige tipo de promoción: ", (tipo) => {
+                        if (tipo === "1") {
+                            readline.question("Porcentaje de descuento: ", (valor) => {
+                                cocina.Promociones(parseInt(index), "descuento", parseFloat(valor));
+                                menuCocina();
+                            });
+                        } else if (tipo === "2") {
+                            cocina.Promociones(parseInt(index), "dos por uno");
+                            menuCocina();
+                        } else {
+                            console.log("Tipo inválido");
+                            menuCocina();
+                        }
+                    });
+                });
+                break;
+
+
             case "0":
                 menuPrincipal();
                 break;
