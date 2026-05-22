@@ -16,6 +16,15 @@ function agregarPedido(nombre, precio) {
 function totalAcumulado() {
     return pedidos.reduce((total, pedido) => total + pedido.precio, 0);
 }
+// Funcion para obtener el IVA del total acumulado
+function calcularIVA() {
+    const iva = totalAcumulado() * 0.16;
+    return iva;
+}
+function mostrarTotalConIVA() {
+    const TotalConIVA = totalAcumulado() + calcularIVA();
+    return TotalConIVA;
+}
 
 // Función para mostrar el total acumulado
 function mostrarTotal() {
@@ -28,5 +37,6 @@ module.exports = {
     productos,
     agregarPedido,
     totalAcumulado,
-    mostrarTotal
+    mostrarTotal,
+    mostrarTotalConIVA
 };
