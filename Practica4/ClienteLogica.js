@@ -178,16 +178,33 @@ function menuCaja() {
              productoSeleccionado.precio
             );
             
-            console.log(`\nProducto agregado: ${productoSeleccionado.nombre}`);
-            cocina.prepararCafe(pedido)
-                .then((mensaje) => {
-                    console.log(`\n${mensaje} - ${pedido.nombre}`);
-                    menuCaja();
-                }
-                ).catch((error) => {
-                    console.log(`\nError: ${error} - ${pedido.nombre}`);
-                    menuCaja();
-                });
+            console.log(`\nProducto recibido: ${productoSeleccionado.nombre}`);
+
+            setTimeout(() => {
+
+                console.log("Preparando...");
+
+                setTimeout(() => {
+
+                    console.log("Empacando...");
+
+                    setTimeout(() => {
+
+                        cocina.prepararCafe(pedido)
+                            .then((mensaje) => {
+                                console.log(`\n${mensaje} - ${pedido.nombre}`);
+                                menuCaja();
+                            })
+                            .catch((error) => {
+                                console.log(`\nError: ${error} - ${pedido.nombre}`);
+                                menuCaja();
+                            });
+
+                    }, 1000);
+
+                }, 1000);
+
+            }, 1000);
         } else if (input === "0") {
             console.log("\n===== COMPRA FINALIZADA =====");
             listarPedidos();
