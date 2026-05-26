@@ -5,6 +5,7 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
 
+
 console.log(" Bienvenido al sistema ");
 menuPrincipal();
 
@@ -108,7 +109,15 @@ function menuCocina() {
                 break;
 
             case "6":
-                cocina.mostrarProductos();
+                console.log("\nProductos disponibles para promo:");
+                cocina.productos.forEach((producto, index) => {
+                    const promocion = producto.promocion
+                        ? producto.promocion.tipo === "descuento"
+                            ? `${producto.promocion.valor}% off`
+                            : "2x1"
+                        : "Sin promo";
+                    console.log(`${index + 1}. ${producto.nombre} - $${producto.precio} (${promocion})`);
+                });
                 readline.question("Número del producto para aplicar promoción: ", (index) => {
                     console.log("Tipos de promoción disponibles:");
                     console.log("1. Descuento");
@@ -117,11 +126,11 @@ function menuCocina() {
                     readline.question("Elige tipo de promoción: ", (tipo) => {
                         if (tipo === "1") {
                             readline.question("Porcentaje de descuento: ", (valor) => {
-                                cocina.Promociones(parseInt(index), "descuento", parseFloat(valor));
+                                cocina.Promociones(parseInt(index) - 1, "descuento", parseFloat(valor));
                                 menuCocina();
                             });
                         } else if (tipo === "2") {
-                            cocina.Promociones(parseInt(index), "dos por uno");
+                            cocina.Promociones(parseInt(index) - 1, "dos por uno");
                             menuCocina();
                         } else {
                             console.log("Tipo inválido");
@@ -146,7 +155,15 @@ function menuCocina() {
 function menuCaja() {
     console.log("\n===== MENÚ DE PRODUCTOS =====");
     cocina.productos.forEach((producto, index) => {
-        console.log(`${index + 1}. ${producto.nombre} - $${producto.precio}`);
+        const promocion = producto.promocion
+            ? producto.promocion.tipo === "descuento"
+                ? `${producto.promocion.valor}% off`
+                : "2x1"
+            : "Sin promo";
+
+        console.log(`${index + 1}. ${producto.nombre} - $${producto.precio} (${promocion})`);
+
+        
     });
     console.log("0. Finalizar compra");
 
@@ -161,6 +178,7 @@ function menuCaja() {
         } else if (input === "0") {
             console.log("\n===== COMPRA FINALIZADA =====");
             listarPedidos();
+            caja.limpiarPedidos();
             menuPrincipal();
         } else {
             console.log("\nOpción inválida");

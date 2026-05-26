@@ -37,15 +37,16 @@ function eliminarProducto(index) {
 // Mostrar productos
 function mostrarProductos() {
     console.log("Productos existentes en la cocina:");
-    const productosFormateados = productos.map(producto => ({
+    const productosFormateados = productos.map((producto, index) => ({
+        No: index + 1,
         nombre: producto.nombre,
         precio: producto.precio,
         cantidad: producto.cantidad,
         fechaCaducidad: producto.fechaCaducidad,
         categoria: producto.categoria,
-        promocion: producto.promocion 
-            ? (producto.promocion.tipo === "descuento" 
-                ? `Descuento ${producto.promocion.valor}%` 
+        promocion: producto.promocion
+            ? (producto.promocion.tipo === "descuento"
+                ? `Descuento ${producto.promocion.valor}%`
                 : "2x1")
             : "Ninguna"
     }));
