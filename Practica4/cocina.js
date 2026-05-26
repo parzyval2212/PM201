@@ -71,18 +71,18 @@ function promociones(nombreProducto, tipoPromocion, valor = null) {
 }
 
 //Funcion de promesa
-function prepararCafe(){
+function prepararCafe(pedido){
     return new Promise((resolve, reject)=>{ //Creamosnuestra promesa.
-        const productos=productos[index]; //Obtenemos el producto de nuestro arreglo
-
-        if (!producto){ //Si el producto no existe noe muestra un mensaje
+       
+        if (!pedido){ //Si el producto no existe noe muestra un mensaje
             reject("Producto no encontrado");
             return;
         } 
 
         //Si el producto existe nos envia un mensaje para avisarnos que se esta preparando el producto.
-        console.log("Preparando tu pedidos.." + productos.nombre);
-
+        pedido.estado="en preparacion"; //Cambiamos el estado del pedido a "en preparacion"
+        console.log("Preparando tu pedidos.." + pedido.nombre);
+       
         setTimeout(()=>{
             //Simula que la preparacion del producto tarda 2 segundos en prepararse 
             //Math.floor genera un numero aleatorio entre 0,1,2 y ese numero decide 
@@ -90,16 +90,24 @@ function prepararCafe(){
             const resultado = Math.floor(Math.random()*3); 
 
             if (resultado === 0){
+                pedido.estado="listo"; //Cambiamos el estado del pedido a "listo"
                 resolve("Tu pedido esta listo");
+                
             }else if (resultado==1){
+                pedido.estado="error"; //Cambiamos el estado del pedido a "error"
                 reject("Ocurrio un error en la preparacion del pedido, intenta una vez más");
+                
             }else{
+                pedido.estado="error"; //Cambiamos el estado del pedido a "error"
                 reject("Falta un ingrediente para completar tu pedido, selecciona otro producto"); 
+                
             }
-        });
-    }, 2000); //Simulamos que la preparacion del producto se tarda dos segundos
-}
 
+        }, 2000);
+
+    });
+
+}
 
 // Exportar para que otros módulos (Caja y Cliente) usen los mismos productos
 module.exports = {
