@@ -1,27 +1,28 @@
-
-//ZONA1> Importacion de archivos y componentes
+//Zona 1: importación de archivos y componentes.
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import {Saludo} from './components/Saludo';
-import {Saludo2} from './components/Saludo2';
-//ZONA2> Main -Componentes
+import { StyleSheet, Text, View, Image} from 'react-native';
+import{Saludo} from './components/Saludo';
+import{Saludo2} from './components/Saludo2';
+import{Perfil} from './components/Perfil';
+
+//Zona2: Componentes
 export default function App() {
-  return (  
-
+  return (
     <View style={styles.container}>
-      <Image source={require('./assets/wave.png')} />
-      <Text>-----------------------------------</Text>
+      <Image source ={require('./assets/wave.png')}/>
+      <Text>Hola Mundo!</Text>
+      <Text>---------------------</Text>
       <Saludo/>
-      <Text>-----------------------------------</Text>
+      <Text>---------------------</Text>
       <Saludo2/>
-      <Text>Hola Mundo React Native</Text>
+      <Text>---------------------</Text>
+      <Perfil/>
       <StatusBar style="auto" />
-
     </View>
-
   );
 }
-//ZONA3> Estilos
+
+//Zona3: Estilos y posicionamiento
 const styles = StyleSheet.create({
   container: {
     flex: 1,
