@@ -9,14 +9,12 @@ import{Perfil} from './components/Perfil';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Image source ={require('./assets/wave.png')}/>
-      <Text>Hola Mundo!</Text>
-      <Text>---------------------</Text>
-      <Saludo/>
-      <Text>---------------------</Text>
-      <Saludo2/>
-      <Text>---------------------</Text>
-      <Perfil/>
+      <Perfil 
+        nombre="Cristopher Josue Herrera Marquina" 
+        carrera="Ingeniería en Sistemas Computacionales" 
+        materia="Programación Móvil" 
+        cuatrimestre="9° cuatrimestre" 
+      />
       <StatusBar style="auto" />
     </View>
   );
