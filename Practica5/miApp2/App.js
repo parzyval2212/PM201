@@ -9,9 +9,23 @@ import{Perfil} from './components/Perfil';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Perfil 
-        nombre="Cristopher Josue Herrera Marquina" 
-        carrera="Ingeniería en Sistemas Computacionales" 
+      <Perfil style={styles.tarjetaVerde}
+        nombre="Cristopher Josue 1" 
+        carrera="Sistemas Computacionales" 
+        materia="Programación Móvil" 
+        cuatrimestre="9° cuatrimestre" 
+      />
+
+      <Perfil style={styles.tarjetaRoja}
+        nombre="Cristopher Josue " 
+        carrera="Sistemas Computacionales" 
+        materia="Programación Móvil" 
+        cuatrimestre="9° cuatrimestre" 
+      />
+
+      <Perfil style={styles.tarjetaVerde}
+        nombre="Cristopher Josue  2" 
+        carrera="Sistemas Computacionales" 
         materia="Programación Móvil" 
         cuatrimestre="9° cuatrimestre" 
       />
@@ -26,6 +40,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
   },
+  tarjetaVerde:{backgroundColor: 'green'},
+  tarjetaRoja:{backgroundColor: 'red'},
 });
