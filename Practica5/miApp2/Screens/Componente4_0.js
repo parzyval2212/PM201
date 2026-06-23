@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput } from 'react-native';
 
-export const Componente4_0 = () => {
+export const Componente4_0 = () => {  
 
     // State para almacenar el texto del TextInput
     const [texto, setTexto] = useState('');
@@ -21,7 +21,7 @@ export const Componente4_0 = () => {
                 onChangeText={setTexto}
                 maxLength={20}
                 autoCapitalize="words"
-                secureTextEntry={false}
+                secureTextEntry={true}
                 style={{
                     borderWidth: 1,
                     padding: 10,
