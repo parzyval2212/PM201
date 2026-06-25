@@ -6,6 +6,8 @@ import TarjetasScreen from './TarjetasScreen';
 import {Componente1} from './Componente1';
 import {Componente4_0} from './Componente4_0';
 import {Expo1} from './Expo1';
+import { Expo2 } from './Expo2';
+import { Expo2SWITCH } from './Expo2SWITCH';
 //Zona2: Componentes
 export default function App() {
     const[screen, setScreen] = useState('menu');
@@ -19,6 +21,10 @@ export default function App() {
             return <Componente4_0/>;
         case 'expo1':
             return <Expo1/>;
+        case 'PressableEXPO2':
+            return <Expo2/>
+        case 'Expo2SWITCH':
+            return <Expo2SWITCH/>
         case 'menu':
             default:
             return (
@@ -29,6 +35,8 @@ export default function App() {
                     <Button title='Practica Componentes' onPress={() => setScreen('componente1')}/> 
                     <Button title="Practica 4" onPress={() => {setScreen('componente4_0');}}/>
                     <Button title="Practica Expo 1" onPress={() => {setScreen('expo1');}}/>
+                    <Button title='Practica EXPO 2 - PRESSABLE' onPress={() => setScreen('PressableEXPO2')}/>
+                    <Button title='Practica Expo 2 - SWITCH' onPress={() => setScreen('Expo2SWITCH')}/>
 
                 </View>
             );// cierra return
