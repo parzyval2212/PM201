@@ -14,7 +14,6 @@ export const Componente4_0 = () => {
       <Text style={styles.title}> Hola RN: Componente propio </Text>
       <Text style={styles.subtitle}>Ejemplo de varios TextInput con State</Text>
 
-      {/* TextInput libre */}
       <TextInput
         placeholder="Escribe algo..."
         value={texto}
@@ -24,7 +23,6 @@ export const Componente4_0 = () => {
         style={styles.input}
       />
 
-      {/* TextInput solo números */}
       <TextInput
         placeholder="Ingresa un número"
         value={numero}
@@ -34,7 +32,6 @@ export const Componente4_0 = () => {
         style={styles.input}
       />
 
-      {/* TextInput formato correo */}
       <TextInput
         placeholder="Ingresa tu correo"
         value={correo}
@@ -46,7 +43,6 @@ export const Componente4_0 = () => {
         style={styles.input}
       />
 
-      {/* TextInput contraseña */}
       <TextInput
         placeholder="Ingresa tu contraseña"
         value={password}
