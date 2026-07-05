@@ -178,20 +178,19 @@ const styles = StyleSheet.create({
 
   fondo: {
     flex: 1,
-    opacity: 1
   },
 
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: 'rgba(255,255,255)'
+    padding: 20
   },
 
   titulo: {
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20
+    marginBottom: 20,
+    color: '#ffffff'
   },
 
   input: {
