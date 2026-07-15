@@ -1,24 +1,73 @@
-//Zona 1: importación de archivos y componentes.
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image} from 'react-native';
+import React,{useState} from 'react';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { MiModal} from '../components/MiModal';
+import { BottomSheet } from '../components/BottomSheet';
 
+export default function Componente1() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [sheetVisible, setSheetVisible] = useState(false);
 
-//Zona2: Componentes
-export default function App() {
   return (
-    <view>
-        <Text>Aqui va la practica de Componentes Nativos</Text>
-    </view>
+    <View style={styles.container}>
+      <Text style= {styles.titulo}>Practica : Modal y Bottom Sheet </Text>
+
+      <Pressable
+        style={[styles.boton, { backgroundColor: '#2a7e01' }]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.botonTexto}>Mostrar Modal</Text>
+      </Pressable>
+
+      <Pressable
+        style={[styles.boton, { backgroundColor: 'red' }]}
+        onPress={() => setSheetVisible(true)}
+      >
+        <Text style={styles.botonTexto}>Abrir Bottom Sheet</Text>
+      </Pressable>
+
+      <MiModal
+        visible={modalVisible}
+        onCerrar={() => setModalVisible(false)}
+        titulo="Modal"
+      >
+        <Text>Nombre: Cristopher</Text>
+        <Text>Carrera: Ing Sistemas</Text>
+        <Text>Cuatrimestre: 9 </Text>
+      </MiModal>
+
+      <BottomSheet
+        visible={sheetVisible}
+        onCerrar={() => setSheetVisible(false)}
+        titulo="Bottom Sheet"
+      >
+        <Text>Este sale desde abajo</Text>
+        <Text>Se puede cerrar tocando el area oscura</Text>
+      </BottomSheet>
+    </View>
+    
   );
 }
 
-//Zona3: Estilos y posicionamiento
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  titulo: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  boton: {
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    borderRadius: 8,
+  },
+  botonTexto: {
+    color: 'white',
+    fontWeight: 'semibold',
+    fontSize: 16,
   },
 });
