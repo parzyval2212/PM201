@@ -1,11 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { LibrosScreen } from './Screens/LibrosScreen';
+import Menu from './Screens/Menu';
+
 
 export default function App() {
   return (
-    <>
-      <StatusBar style="auto" />
-      <LibrosScreen />
-    </>
+    <Menu> </Menu>
   );
 }
