@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {View,SafeAreaView,Text,TextInput,Pressable,StyleSheet, Alert, Platform} from 'react-native';
+import { obtenerUrlUsuarios } from '../services/apiConfig';
 
 export default function App() {
   const [nombre, setNombre] = useState('');
@@ -21,7 +22,7 @@ export default function App() {
     }
     try{
       setCargando(true);
-      const respuesta=await fetch('http://192.168.100.6:5000/v1/usuarios/', 
+      const respuesta=await fetch(await obtenerUrlUsuarios('/'),
         {method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({nombre, edad})

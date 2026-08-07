@@ -39,18 +39,22 @@ export default function TabsLayout() {
                     ),
                 }}
             />
-            {/* href: null mantiene la ruta disponible para router.push, pero no crea una pestaña visible. */}
             <Tabs.Screen
-                name="detalles"
-                options={{ href: null }}
-            />
-            {/* Actualizar también se abre desde Detalles, por eso se oculta de la barra inferior. */}
-            <Tabs.Screen
-                name="actualizar"
-                options={{ href: null }}
+                name="configuracion"
+                options={{
+                    title: "Configuración",
+                    tabBarIcon: ({ color, size, focused }) => (
+                        <Ionicons
+                            name={focused ? "settings" : "settings-outline"}
+                            color={color}
+                            size={size}
+                        />
+                    ),
+                }}
             />
         </Tabs>
     );
 }
 
-// Con tabs agregamos una navegación para las rutas de consulta y alta.
+// Las pestañas solo contienen Alta y Consulta.
+// Detalles y Actualizar se definen en el Stack raíz de app/_layout.js.

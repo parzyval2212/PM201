@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "repa2",
-    "slug": "repa2",
+    "name": "Usuario API",
+    "slug": "usuario-api",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/splash-icon.png",
+    "icon": "./assets/usuario-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/usuario-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,9 +16,10 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.pm201.usuarioapi",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/usuario-icon.png",
+        "backgroundColor": "#F5F7FA"
       },
       "edgeToEdgeEnabled": true
     },
@@ -26,7 +27,31 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F5F7FA",
+          "image": "./assets/usuario-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-font",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "59e1b839-13a2-4c6b-af01-3df289594c0a"
+      }
+    }
   }
 }

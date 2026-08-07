@@ -1,13 +1,11 @@
 // Componentes visuales de React Native usados para construir la pantalla.
 // Pressable detecta toques/clics; StyleSheet organiza los estilos al final.
-import {SafeAreaView,View,Text,StyleSheet, Pressable} from 'react-native';
+import {SafeAreaView,View,Text,StyleSheet, Pressable, Modal} from 'react-native';
 // useState guarda datos que pueden cambiar; useEffect ejecuta código al cargar la pantalla.
 import React, {useState, useEffect} from 'react';
 // useLocalSearchParams lee el id enviado desde Consulta; router permite volver atrás.
 import { router, useLocalSearchParams } from 'expo-router';
-
-// Centraliza la URL para no repetirla en las solicitudes GET y DELETE.
-const API_URL = 'http://192.168.100.6:5000/v1/usuarios';
+import { obtenerUrlUsuarios } from '../services/apiConfig';
 
 // Credenciales indicadas para la práctica. El backend las requiere en PUT y DELETE.
 const encabezadosAutorizacion = () => ({
@@ -26,6 +24,8 @@ export default function DetallesUsuariosScreen() {
     const [error, setError] = useState('');
     // Deshabilita el botón mientras DELETE está en proceso y evita solicitudes duplicadas.
     const [eliminando, setEliminando] = useState(false);
+    // Controla si el modal de confirmación para eliminar está visible.
+    const [modalVisible, setModalVisible] = useState(false);
 
     // Esta función consulta todos los usuarios y selecciona solamente el que coincide con id.
     // Se usa GET /usuarios/ porque el backend actual no tiene GET /usuarios/{id}.
@@ -37,7 +37,7 @@ export default function DetallesUsuariosScreen() {
 
             // fetch realiza una petición HTTP GET. Al no indicar method, GET es el valor predeterminado.
             const respuesta = await fetch(
-                `${API_URL}/`
+                await obtenerUrlUsuarios('/')
             );
 
             // respuesta.ok es false cuando el servidor responde con un estado de error, como 404 o 500.
@@ -90,7 +90,7 @@ export default function DetallesUsuariosScreen() {
 
             // DELETE pide al backend borrar el recurso /v1/usuarios/{id}.
             // headers agrega Authorization porque esta ruta está protegida por HTTP Basic.
-            const respuesta = await fetch(`${API_URL}/${id}`, {
+            const respuesta = await fetch(await obtenerUrlUsuarios(`/${id}`), {
                 method: 'DELETE',
                 headers: encabezadosAutorizacion(),
             });
@@ -111,6 +111,12 @@ export default function DetallesUsuariosScreen() {
             // Reactiva el botón incluso si la eliminación falló.
             setEliminando(false);
         }
+    };
+
+    // Primero se cierra el modal y después se envía la petición DELETE.
+    const confirmarEliminacion = () => {
+        setModalVisible(false);
+        eliminarUsuario();
     };
     
     return(
@@ -138,9 +144,10 @@ export default function DetallesUsuariosScreen() {
                         {/* Este Pressable ejecuta la eliminación al pulsar "Eliminar usuario". */}
                         {/* La función se pasa sin paréntesis para que se ejecute solo al pulsar. */}
                         {/* disabled bloquea pulsaciones durante la petición DELETE. */}
+                        {/* El primer toque no elimina: abre el modal para pedir confirmación. */}
                         <Pressable
                             style={styles.botonEliminar}
-                            onPress={eliminarUsuario}
+                            onPress={() => setModalVisible(true)}
                             disabled={eliminando}
                         >
                             {/* En React Native el texto visible debe ir dentro del componente Text. */}
@@ -160,6 +167,37 @@ export default function DetallesUsuariosScreen() {
                     </>
                 )}
             </View>
+            <Modal
+                // visible decide si React Native dibuja o esconde el modal.
+                visible={modalVisible}
+                transparent={true}
+                animationType="fade"
+                // En Android, el botón físico de regreso también cierra el modal.
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={styles.fondoModal}>
+                    <View style={styles.contenidoModal}>
+                        <Text style={styles.tituloModal}>¿Eliminar usuario?</Text>
+                        <Text style={styles.mensajeModal}>
+                            Se eliminará a {usuario.nombre}. Esta acción no se puede deshacer.
+                        </Text>
+                        <View style={styles.filaBotonesModal}>
+                            <Pressable
+                                style={styles.botonCancelarModal}
+                                onPress={() => setModalVisible(false)}
+                            >
+                                <Text style={styles.textoBoton}>Cancelar</Text>
+                            </Pressable>
+                            <Pressable
+                                style={styles.botonConfirmarModal}
+                                onPress={confirmarEliminacion}
+                            >
+                                <Text style={styles.textoBoton}>Eliminar</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -251,6 +289,58 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     marginTop: 12,
+  },
+
+  // Capa semitransparente que oscurece el contenido detrás del modal.
+  fondoModal: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+  },
+
+  // Caja blanca central que contiene el mensaje y los dos botones.
+  contenidoModal: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 15,
+    padding: 22,
+  },
+
+  tituloModal: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    marginBottom: 10,
+  },
+
+  mensajeModal: {
+    fontSize: 16,
+    color: '#4B5563',
+    lineHeight: 22,
+  },
+
+  filaBotonesModal: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 22,
+  },
+
+  botonCancelarModal: {
+    flex: 1,
+    backgroundColor: '#6B7280',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  botonConfirmarModal: {
+    flex: 1,
+    backgroundColor: '#DC2626',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
   },
 
   // Texto blanco mostrado dentro del botón de regresar.

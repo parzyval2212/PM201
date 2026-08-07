@@ -4,9 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Platform, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
 // useLocalSearchParams recibe el id; router permite regresar a Consulta tras guardar.
 import { router, useLocalSearchParams } from 'expo-router';
-
-// Misma ruta base que las pantallas de Consulta y Detalles.
-const API_URL = 'http://192.168.100.6:5000/v1/usuarios';
+import { obtenerUrlUsuarios } from '../services/apiConfig';
 
 // PUT requiere las mismas credenciales Basic que DELETE en el backend de la práctica.
 const encabezadosAutorizacion = () => ({
@@ -33,7 +31,7 @@ export default function ActualizarUsuariosScreen() {
             setError('');
 
             // GET es el método predeterminado de fetch; esta ruta no necesita autenticación.
-            const respuesta = await fetch(`${API_URL}/`);
+            const respuesta = await fetch(await obtenerUrlUsuarios('/'));
             if (!respuesta.ok) {
                 throw new Error(`Error HTTP: ${respuesta.status}`);
             }
@@ -84,7 +82,7 @@ export default function ActualizarUsuariosScreen() {
             setError('');
 
             // PUT envía el objeto completo con nombre y edad, y Basic Auth autoriza el cambio.
-            const respuesta = await fetch(`${API_URL}/${id}`, {
+            const respuesta = await fetch(await obtenerUrlUsuarios(`/${id}`), {
                 method: 'PUT',
                 headers: encabezadosAutorizacion(),
                 // JSON.stringify convierte el objeto de JavaScript en el cuerpo JSON de la petición.

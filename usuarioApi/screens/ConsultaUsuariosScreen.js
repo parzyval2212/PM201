@@ -3,13 +3,14 @@ import React, {useCallback, useState} from 'react';
 // router permite cambiar de pantalla mediante las rutas creadas dentro de la carpeta app.
 // useFocusEffect se ejecuta cada vez que esta pantalla vuelve a estar visible.
 import { router, useFocusEffect } from 'expo-router';
+import { obtenerUrlUsuarios } from '../services/apiConfig';
 export default function ConsultaUsuariosScreen() {
 
   const[ usuarios, setUsuarios] = useState([]);
   // useCallback conserva esta función entre renderizados para poder usarla como dependencia.
   const obtenerUsuarios = useCallback(async () => {
     try{
-      const respuesta=await fetch('http://192.168.100.6:5000/v1/usuarios/');
+      const respuesta=await fetch(await obtenerUrlUsuarios('/'));
       const datos= await respuesta.json();
       console.log('Respuesta API', datos);
 
